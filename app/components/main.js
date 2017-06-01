@@ -1,11 +1,17 @@
-import React, {Components} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import store from './../store';
+
+// import components
+import Dashboard from './dashboard/index'
 
 const App = () => {
   return(
-    <h1>
-      Hello World 
-    </h1>
+    <Provider store={store}>
+      <Dashboard /> 
+    </Provider>
   )
 }
+
 ReactDOM.render(<App />, document.getElementById('app'));
