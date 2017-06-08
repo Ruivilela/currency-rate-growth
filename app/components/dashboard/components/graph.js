@@ -1,17 +1,59 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux'
-import getCurrency from './../../../data/currency/action';
+//import { bindActionCreators } from 'redux'
+//import getCurrency from './../../../data/currency/action';
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  Tooltip,
+  YAxis,
+  XAxis
+} from 'recharts';
+
 
 export class Graph extends Component {
   render(){
-    console.log('this.props.currency', this.props.currency)
     if(!this.props.currency){
-      return(<div> "I am null" </div>)
+      return(<div> </div>)
     }
+
     if(this.props.currency){
-      return(<div> {this.props.currency}</div>)
+      const data = () => {
+        let dataSet = [];
+
+        this.props.currency.map((value) => {
+          dataSet.push({rate: value})
+        })
+
+        return dataSet
+      }
+
+      return(
+        <LineChart
+          style={styleGraph.lineChart}
+          width={styleGraph.width}
+          height={styleGraph.height}
+          data={data()}
+        >
+          <Line type="monotone" dataKey="rate" stroke="#8884d8" />
+          <YAxis />
+          <XAxis />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
+          <Tooltip />
+        </LineChart>
+      )
     }
+  }
+}
+
+const styleGraph = {
+  width:500,
+  height:500,
+  lineChart:{
+    marginLeft:"30%",
+    marginTop:"5%"
   }
 }
 
@@ -24,5 +66,4 @@ function mapStateToProps(state){
 // function mapDispatchToProps(dispatch) {
 //   return { actions: bindActionCreators({getCurrency: getCurrency}, dispatch) }
 // }
-
 export default connect(mapStateToProps)(Graph);

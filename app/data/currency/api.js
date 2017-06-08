@@ -20,7 +20,7 @@ export const getLastXDays = (number_of_days, currency, base="EUR") => {
         .then((date) => {
           data_sample.push(date);
 
-          if(i === number_of_days -1) {
+          if(i === number_of_days - 1) {
             resolve(data_sample);
           }
         })

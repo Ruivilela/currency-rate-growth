@@ -14,9 +14,4 @@ const allReducers = combineReducers({
 const middleware = applyMiddleware(thunk, promise, logger)
 const store = createStore(allReducers,middleware)   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-getLastXDays(5,"USD").then((result)=>{
-  store.dispatch(getCurrency(result));
-})
-
-
 export default store;
