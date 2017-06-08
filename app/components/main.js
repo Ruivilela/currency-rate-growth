@@ -2,16 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import store from './../store';
-
 // import components
-import Dashboard from './dashboard/index'
+import Dashboard from './dashboard/index';
 
 const App = () => {
-  return(
-    <Provider store={store}>
-      <Dashboard /> 
-    </Provider>
-  )
+  return(<Dashboard />)
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById('app'));
