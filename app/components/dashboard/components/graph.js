@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
+import React, {  Component} from 'react';
 import ReactDOM from 'react-dom';
-import {connect} from 'react-redux';
-//import { bindActionCreators } from 'redux'
-//import getCurrency from './../../../data/currency/action';
+import { connect } from 'react-redux';
 import {
   LineChart,
   Line,
@@ -11,7 +9,6 @@ import {
   YAxis,
   XAxis
 } from 'recharts';
-
 
 export class Graph extends Component {
   render(){
@@ -63,7 +60,4 @@ function mapStateToProps(state){
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return { actions: bindActionCreators({getCurrency: getCurrency}, dispatch) }
-// }
 export default connect(mapStateToProps)(Graph);

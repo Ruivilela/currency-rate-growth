@@ -1,14 +1,15 @@
-import React , {Component} from 'react';
-import {connect} from 'react-redux';
-import Filter from './components/filter';
+import React , {Component} from 'react'; 
+//components
+import FilterDays from './components/filter-days';
+import FilterCurrency from './components/filter-currency';
 import Graph  from './components/graph';
-import getCurrency from './../../data/currency/action';
 
 export default class Dashboard extends Component {
   render(){
     return(
       <div>
-        <Filter />
+        <FilterDays />
+        <FilterCurrency />
         <Graph />
       </div>
     )

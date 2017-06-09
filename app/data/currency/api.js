@@ -1,11 +1,13 @@
-export const getCurrencyValue = (currency, date="latest", base="EUR") => {
+export const getCurrencyValue = (currency, date="latest", base="AUD") => {
   // put condition for when currency is the same
   return fetch(`https://api.fixer.io/${date}?base=${base}`)
     .then((result) => result.json())
-    .then((resultJson) => resultJson.rates[currency])
+    .then((resultJson) => {
+      return resultJson.rates[currency]
+    })
 }
 
-export const getLastXDays = (number_of_days, currency, base="EUR") => {
+export const getLastXDays = (number_of_days, currency, base="AUD") => {
   let data_sample = []
 
   return new Promise((resolve, reject) => {
@@ -27,7 +29,6 @@ export const getLastXDays = (number_of_days, currency, base="EUR") => {
     };
   })
 };
-
 
 function formatDateApi(date){
   let date_array = date.split("-");
