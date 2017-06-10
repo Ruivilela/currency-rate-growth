@@ -5,6 +5,8 @@ import { getLastXDays } from './../../../data/currency/api';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 
+import Filter from './../../filter';
+
 export class FilterCurrency extends Component {
   constructor(props) {
    super(props);
@@ -38,7 +40,7 @@ export class FilterCurrency extends Component {
     this.setState({
       last_x_days:days,
       base_currency:event.target.value
-    }); // TODO CHANGE to an observable 
+    }); // TODO CHANGE to an observable
 
     getLastXDays(days, event.target.value).then((result)=> {
       this.props.actions.currency(result);

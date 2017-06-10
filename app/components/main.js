@@ -4,9 +4,16 @@ import {Provider} from 'react-redux';
 import store from './../store';
 // import components
 import Dashboard from './dashboard/index';
+import SideBar from './side-bar/index';
+
 
 const App = () => {
-  return(<Dashboard />)
+  return(
+    <div>
+      <SideBar />
+      <Dashboard />
+    </div>
+  )
 }
 
 ReactDOM.render(
