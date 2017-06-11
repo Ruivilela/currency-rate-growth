@@ -1,4 +1,4 @@
-export const getCurrencyValue = (currency, date="latest", base="AUD") => {
+export const getCurrencyValue = (currency, date="latest", base="EUR") => {
   // put condition for when currency is the same
   return fetch(`https://api.fixer.io/${date}?base=${base}`)
     .then((result) => result.json())

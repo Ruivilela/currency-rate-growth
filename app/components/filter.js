@@ -1,11 +1,13 @@
 import React , { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import getCurrency from './../data/currency/action';
+import filterUpdate from './../state/filters/action';
 
-export class Filter extends Component {
+export default class Filter extends Component {
   constructor(props){
     super(props);
-    this.handleChange = this.handleChange.bind(this);
 
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       convert_to:"USD",
       base_currency:"EUR",

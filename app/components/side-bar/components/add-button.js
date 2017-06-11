@@ -1,22 +1,52 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { mapStateToProps, mapDispatchToProps } from './../../filter';
+import { getLastXDays } from './../../../data/currency/api';
 
-export default class AddButton extends Component {
+export class AddButton extends Component {
   constructor(props){
     super(props);
-    this.handleChange = this.handleChange.bind(this)
+
+    this.click = this.click.bind(this)
+
+    this.state = {
+      convert_to:"USD",
+      base_currency:"EUR",
+      last_x_days: 7,
+    }
   }
 
   render(){
     return(
-      <button type="button" className="btn btn-primary" onClick={this.handleChange}>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={this.click}
+        style={addButtonStyle}
+      >
         Add Currency
       </button>
     )
   }
 
-  handleChange(){
-    
+  click(event){
+    let base_currency = !this.props.filter ?
+      this.state.base_currency : this.props.filter.base_currency;
+
+    let last_x_days = !this.props.filter ?
+      this.state.last_x_days : this.props.filter.last_x_days;
+
+    let convert_to = !this.props.filter ?
+      this.state.convert_to : this.props.filter.convert_to;
+
+    getLastXDays(last_x_days, convert_to, base_currency)
+      .then((result) =>  this.props.actions.currency(result)); 
   }
 }
+
+const addButtonStyle = {
+  marginLeft:"1%",
+  width:"15%"
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddButton);

@@ -49,8 +49,7 @@ const styleGraph = {
   width:500,
   height:500,
   lineChart:{
-    marginLeft:"30%",
-    marginTop:"5%"
+    marginTop:"10%"
   }
 }
 

@@ -8,11 +8,15 @@ import {getLastXDays} from './data/currency/api';
 // reducers import
 import currencyReducer from './data/currency/reducer';
 import filterReducer from './state/filters/reducer';
+import initialState from './state/initial-state/reducer';
 
 const allReducers = combineReducers({
   currency: currencyReducer,
   filter: filterReducer
 })
+
+// getLastXDays()
+// store.dispatch()
 
 const middleware = applyMiddleware(thunk, promise, logger) //logger)
 const store = createStore(allReducers,middleware)   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

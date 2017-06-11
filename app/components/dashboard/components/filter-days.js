@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import { getLastXDays } from './../../../data/currency/api';
-import getCurrency from './../../../data/currency/action';
-import filterUpdate from './../../../state/filters/action';
+import Filter , { mapDispatchToProps, mapStateToProps } from './../../filter';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-export class FilterDays extends Component {
+export class FilterDays extends Filter {
   constructor(props) {
    super(props);
-
-   this.state = {
-     base_currency:"EUR",
-     last_x_days: 7
-   }
-
-   this.handleChange = this.handleChange.bind(this);
  }
 
   render(){
@@ -32,7 +24,7 @@ export class FilterDays extends Component {
   }
 
   componentWillMount(){
-    getLastXDays(this.state.last_x_days, this.state.base_currency).then((result)=> {
+    getLastXDays(this.state.last_x_days, this.state.convert_to,this.state.base_currency).then((result)=> {
       this.props.actions.currency(result);
     })
   }
@@ -41,16 +33,21 @@ export class FilterDays extends Component {
     let base_currency = !this.props.filter ?
       this.state.base_currency : this.props.filter.base_currency;
 
+    let convert_to = !this.props.filter ?
+      this.state.convert_to : this.props.filter.convert_to
+
     this.setState({
+      convert_to: convert_to,
       last_x_days: event.target.value,
       base_currency: base_currency
     }); // TODO CHANGE to an observable
 
-    getLastXDays(parseInt(event.target.value), base_currency).then((result)=> {
+    getLastXDays(parseInt(event.target.value), this.state.convert_to ,base_currency).then((result)=> {
       this.props.actions.currency(result);
     })
 
     this.props.actions.filterUpdate({
+      convert_to: convert_to,
       base_currency: base_currency,
       last_x_days: event.target.value
     });
@@ -59,27 +56,8 @@ export class FilterDays extends Component {
 
 const filterStyle = {
   display:"inline",
-  marginTop:"2%",
-  marginLeft:"35%",
-  width:"13%"
-}
-
-function mapStateToProps(state){
-  return {
-    filter: state.filter
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return { actions:
-    bindActionCreators(
-      {
-        currency: getCurrency,
-        filterUpdate: filterUpdate
-      },
-      dispatch
-    )
-  }
+  marginLeft:"10%",
+  width:"35%"
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterDays);

@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
-import getCurrency from './../../../data/currency/action';
-import filterUpdate from './../../../state/filters/action';
 import { getLastXDays } from './../../../data/currency/api';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 
-import Filter from './../../filter';
+import Filter , { mapDispatchToProps, mapStateToProps } from './../../filter';
 
-export class FilterCurrency extends Component {
+class FilterCurrency extends Filter {
   constructor(props) {
    super(props);
-
-   this.state = {
-     base_currency:"EUR",
-     last_x_days: 7
-   };
-
-   this.handleChange = this.handleChange.bind(this);
   }
 
   render(){
@@ -37,45 +28,31 @@ export class FilterCurrency extends Component {
     let days = !this.props.filter ?
       this.state.last_x_days : this.props.filter.last_x_days;
 
+    let convert_to = !this.props.filter ?
+      this.state.convert_to : this.props.filter.convert_to;
+
     this.setState({
       last_x_days:days,
-      base_currency:event.target.value
+      base_currency:event.target.value,
+      convert_to: convert_to
     }); // TODO CHANGE to an observable
 
-    getLastXDays(days, event.target.value).then((result)=> {
+    getLastXDays(days, convert_to ,event.target.value).then((result)=> {
       this.props.actions.currency(result);
     })
 
     this.props.actions.filterUpdate({
       last_x_days:days,
-      base_currency:event.target.value
+      base_currency:event.target.value,
+      convert_to: convert_to
     });
   }
 }
 
 const filterStyle = {
   display:"inline",
-  marginTop:"2%",
-  marginLeft:"5%",
-  width:"13%"
-}
-
-function mapStateToProps(state){
-  return {
-    filter: state.filter
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(
-      {
-        currency: getCurrency,
-        filterUpdate: filterUpdate
-      },
-      dispatch
-    )
-  }
+  width:"35%",
+  marginLeft:"20%",
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(FilterCurrency);
