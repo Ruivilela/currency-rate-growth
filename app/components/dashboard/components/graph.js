@@ -13,7 +13,18 @@ import {
 export class Graph extends Component {
   render(){
     if(!this.props.currency){
-      return(<div> </div>)
+      return(
+        <LineChart
+          style={styleGraph.lineChart}
+          width={styleGraph.width}
+          height={styleGraph.height}
+        >
+          <Line type="monotone" dataKey="rate" stroke="#8884d8" />
+          <YAxis />
+          <XAxis />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
+        </LineChart>
+      )
     }
 
     if(this.props.currency){

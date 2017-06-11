@@ -23,28 +23,15 @@ export class FilterDays extends Filter {
     )
   }
 
-  componentWillMount(){
-    getLastXDays(this.state.last_x_days, this.state.convert_to,this.state.base_currency).then((result)=> {
-      this.props.actions.currency(result);
-    })
-  }
-
   handleChange(event) {
     let base_currency = !this.props.filter ?
-      this.state.base_currency : this.props.filter.base_currency;
+      this.props.initialState.base_currency : this.props.filter.base_currency;
 
     let convert_to = !this.props.filter ?
-      this.state.convert_to : this.props.filter.convert_to
+      this.props.initialState.convert_to : this.props.filter.convert_to
 
-    this.setState({
-      convert_to: convert_to,
-      last_x_days: event.target.value,
-      base_currency: base_currency
-    }); // TODO CHANGE to an observable
-
-    getLastXDays(parseInt(event.target.value), this.state.convert_to ,base_currency).then((result)=> {
-      this.props.actions.currency(result);
-    })
+    getLastXDays(parseInt(event.target.value), convert_to , base_currency)
+      .then((result)=> this.props.actions.currency(result));
 
     this.props.actions.filterUpdate({
       convert_to: convert_to,

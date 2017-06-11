@@ -1,7 +1,6 @@
-const initialState = (payload) => {
+const initialState = () => {
   return {
-    type:"INITIAL_STATE",
-    payload: payload
+    type:"INITIAL_STATE"
   }
 };
 

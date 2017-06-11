@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Filter, { mapStateToProps, mapDispatchToProps } from './../../filter';
+import { getLastXDays } from './../../../data/currency/api';
+
 
 export class ConvertToFilter extends Filter {
   constructor(props){
@@ -22,10 +24,13 @@ export class ConvertToFilter extends Filter {
 
   handleChange(event){
     let base_currency = !this.props.filter ?
-      this.state.base_currency : this.props.filter.base_currency;
+      this.props.initialState.base_currency : this.props.filter.base_currency;
 
     let last_x_days = !this.props.filter ?
-      this.state.last_x_days : this.props.filter.last_x_days;
+      this.props.initialState.last_x_days : this.props.filter.last_x_days;
+
+    getLastXDays(last_x_days, event.target.value, base_currency)
+      .then((result) =>  this.props.actions.currency(result));
 
       this.props.actions.filterUpdate({
         convert_to: event.target.value,

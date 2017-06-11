@@ -8,12 +8,6 @@ export default class Filter extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-
-    this.state = {
-      convert_to:"USD",
-      base_currency:"EUR",
-      last_x_days: 7,
-    }
   }
   render(){
     return( <div> </div>);
@@ -22,6 +16,7 @@ export default class Filter extends Component {
 
 export const mapStateToProps = (state) => {
   return {
+    initialState: state.initialState,
     filter: state.filter
   };
 }
