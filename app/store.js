@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise';
+
 import initialState from './state/initial-state/action';
 
 // reducers import
@@ -14,7 +15,7 @@ const allReducers = combineReducers({
   initialState: initialStateReducer,
   currency: currencyReducer,
   filter: filterReducer,
-  increment_currency: addCurrencyReducer
+  number_of_children: addCurrencyReducer
 })
 
 const middleware = applyMiddleware(thunk, promise, logger) //logger)

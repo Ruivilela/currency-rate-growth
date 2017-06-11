@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Filter, { mapStateToProps, mapDispatchToProps } from './../../filter';
 import { getLastXDays } from './../../../data/currency/api';
 
-
 export class ConvertToFilter extends Filter {
   constructor(props){
     super(props)

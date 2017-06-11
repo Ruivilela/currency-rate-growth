@@ -1,7 +1,8 @@
 export default function(state=null, action){
   switch(action.type){
     case "ADD_CURRENCY":
-      return state.number_of_children++;
+      const result = (state == null) ? 2 : state + 1;
+      return result;
       break;
   }
   return state;

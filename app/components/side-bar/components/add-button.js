@@ -1,11 +1,11 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from './../../filter';
+import { bindActionCreators } from 'redux';
+import addCurrency from './../../../state/add-currency/action';
 
-export default class AddButton extends Component {
+export class AddButton extends Component {
   constructor(props){
     super(props);
-
     this.click = this.click.bind(this)
   }
 
@@ -23,7 +23,8 @@ export default class AddButton extends Component {
   }
 
   click(event){
-    console.log("working")
+    this.props.actions.addCurrency()
+
   }
 }
 
@@ -31,3 +32,16 @@ const addButtonStyle = {
   marginLeft:"1%",
   width:"15%"
 }
+
+function mapDispatchToProps(dispatch){
+  return {
+    actions: bindActionCreators(
+      {
+        addCurrency: addCurrency
+      },
+      dispatch
+    )
+  }
+}
+
+export default connect (null, mapDispatchToProps)(AddButton)
