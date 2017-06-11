@@ -8,6 +8,7 @@ export default class Filter extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+
     this.state = {
       convert_to:"USD",
       base_currency:"EUR",

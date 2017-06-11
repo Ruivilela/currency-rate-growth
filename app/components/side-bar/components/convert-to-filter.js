@@ -41,4 +41,4 @@ const convertToStyle = {
   width:"10%"
 }
 
-export default connect(mapStateToProps, mapDispatchToProps )(ConvertToFilter)
+export default connect(mapStateToProps, mapDispatchToProps)(ConvertToFilter);

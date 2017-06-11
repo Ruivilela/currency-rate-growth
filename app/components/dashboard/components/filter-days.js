@@ -17,8 +17,8 @@ export class FilterDays extends Filter {
         style={filterStyle}
       >
         <option defaultValue value={7}> 1 week </option>
+        <option value={15}> 2 weeks </option>
         <option value={30}> 1 month </option>
-        <option value={90}> 3 months </option>
       </select>
     )
   }
