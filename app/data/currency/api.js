@@ -41,3 +41,5 @@ function formatDateApi(date){
   }
   return date_array.join("-")
 }
+
+export default getLastXDays; 

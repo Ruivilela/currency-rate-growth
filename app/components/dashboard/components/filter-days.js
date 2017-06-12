@@ -24,20 +24,7 @@ export class FilterDays extends Filter {
   }
 
   handleChange(event) {
-    let base_currency = !this.props.filter ?
-      this.props.initialState.base_currency : this.props.filter.base_currency;
-
-    let convert_to = !this.props.filter ?
-      this.props.initialState.convert_to : this.props.filter.convert_to
-
-    getLastXDays(parseInt(event.target.value), convert_to , base_currency)
-      .then((result)=> this.props.actions.currency(result));
-
-    this.props.actions.filterUpdate({
-      convert_to: convert_to,
-      base_currency: base_currency,
-      last_x_days: event.target.value
-    });
+    this.props.actions.filterUpdate({ last_x_days: event.target.value });
   }
 }
 

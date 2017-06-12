@@ -24,7 +24,6 @@ export class AddButton extends Component {
 
   click(event){
     this.props.actions.addCurrency()
-
   }
 }
 

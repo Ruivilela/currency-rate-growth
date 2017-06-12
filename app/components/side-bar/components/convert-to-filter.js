@@ -22,20 +22,14 @@ export class ConvertToFilter extends Filter {
   }
 
   handleChange(event){
-    let base_currency = !this.props.filter ?
-      this.props.initialState.base_currency : this.props.filter.base_currency;
+    const filter = {};
+    const target_value = event.target.parentNode.attributes.value.value;
 
-    let last_x_days = !this.props.filter ?
-      this.props.initialState.last_x_days : this.props.filter.last_x_days;
+    filter[target_value] = {
+      convert_to: event.target.value
+    }
 
-    getLastXDays(last_x_days, event.target.value, base_currency)
-      .then((result) =>  this.props.actions.currency(result));
-
-      this.props.actions.filterUpdate({
-        convert_to: event.target.value,
-        base_currency: base_currency,
-        last_x_days: last_x_days
-      });
+    this.props.actions.convertToFilterUpdate(filter);
   }
 }
 

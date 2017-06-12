@@ -1,6 +1,5 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-
 //components
 import AddButton from './components/add-button';
 import ConvertToFilter from './components/convert-to-filter';
@@ -12,9 +11,9 @@ export class SideBar extends Component {
       this.props.initialState : this.props.number_of_children;
 
     for(let i = 0 ; i < number_of_children ; i++){
-      if(i > 2) break;
+      if(i > 2) break; // limits the number of currencies available
       children.push(
-        <div key={i} style={sideBarStyle.children}>
+        <div key={i} value={i} style={sideBarStyle.children}>
           <ConvertToFilter />
           <AddButton />
         </div>

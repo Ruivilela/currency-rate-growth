@@ -24,32 +24,8 @@ class FilterCurrency extends Filter {
     )
   }
 
-  componentWillMount(){
-    if(this.props.initialState){
-      getLastXDays(
-        this.props.initialState.last_x_days,
-        this.props.initialState.convert_to ,
-        this.props.initialState.base_currency
-      ).then((result)=> this.props.actions.currency(result))
-    }
-  }
-
   handleChange(event){
-    let days = !this.props.filter ?
-      this.props.initialState.last_x_days : this.props.filter.last_x_days;
-
-    let convert_to = !this.props.filter ?
-      this.props.initialState.convert_to : this.props.filter.convert_to;
-
-    getLastXDays(days, convert_to ,event.target.value).then((result)=> {
-      this.props.actions.currency(result);
-    })
-
-    this.props.actions.filterUpdate({
-      last_x_days:days,
-      base_currency:event.target.value,
-      convert_to: convert_to
-    });
+    this.props.actions.filterUpdate({base_currency:event.target.value});
   }
 }
 

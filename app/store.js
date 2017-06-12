@@ -9,12 +9,14 @@ import initialState from './state/initial-state/action';
 import initialStateReducer from './state/initial-state/reducer';
 import currencyReducer from './data/currency/reducer';
 import filterReducer from './state/filters/reducer';
+import convertToFilterReducer from './state/convert-to-filter/reducer';
 import addCurrencyReducer from './state/add-currency/reducer';
 
 const allReducers = combineReducers({
   initialState: initialStateReducer,
   currency: currencyReducer,
   filter: filterReducer,
+  convert_to_filter: convertToFilterReducer,
   number_of_children: addCurrencyReducer
 })
 
