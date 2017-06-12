@@ -20,7 +20,7 @@ const allReducers = combineReducers({
   number_of_children: addCurrencyReducer
 })
 
-const middleware = applyMiddleware(thunk, promise, logger) //logger)
+const middleware = applyMiddleware(thunk, promise) //logger
 const store = createStore(allReducers,middleware)   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 store.dispatch(initialState())

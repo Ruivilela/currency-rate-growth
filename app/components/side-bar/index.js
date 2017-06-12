@@ -15,7 +15,6 @@ export class SideBar extends Component {
       children.push(
         <div key={i} value={i} style={sideBarStyle.children}>
           <ConvertToFilter />
-          <AddButton />
         </div>
       )
     }
@@ -32,7 +31,7 @@ const sideBarStyle = {
   children:{
     marginTop:"2%"
   },
-  marginTop:"120px"
+  marginTop:"180px"
 }
 
 function mapStateToProps(state){

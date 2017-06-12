@@ -1,7 +1,9 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { getLastXDays } from './../../../data/currency/api';
 import addCurrency from './../../../state/add-currency/action';
+import getCurrency from './../../../data/currency/action';
 
 export class AddButton extends Component {
   constructor(props){
@@ -17,13 +19,25 @@ export class AddButton extends Component {
         onClick={this.click}
         style={addButtonStyle}
       >
-        Add Currency
+        Update Currency
       </button>
     )
   }
 
-  click(event){
-    this.props.actions.addCurrency()
+  click(){
+    let base_currency = this.props.filter && this.props.filter.base_currency ?
+      this.props.filter.base_currency : this.props.initialState.base_currency;
+
+    let days = this.props.filter && this.props.filter.last_x_days ?
+      this.props.filter.last_x_days : this.props.initialState.last_x_days;
+
+    let convert_to = this.props.convert_to ?
+      this.props.convert_to : this.props.initialState.convert_to ;
+
+    getLastXDays(days, convert_to , base_currency)
+      .then((result) => this.props.actions.currency(result))
+    // TODO add more than one currency feature
+    //this.props.actions.addCurrency()
   }
 }
 
@@ -32,15 +46,26 @@ const addButtonStyle = {
   width:"15%"
 }
 
+
+
 function mapDispatchToProps(dispatch){
   return {
     actions: bindActionCreators(
       {
-        addCurrency: addCurrency
+        addCurrency: addCurrency,
+        currency: getCurrency
       },
       dispatch
     )
   }
 }
 
-export default connect (null, mapDispatchToProps)(AddButton)
+function mapStateToProps(state) {
+  return {
+    initialState: state.initialState,
+    filter: state.filter,
+    convert_to: state.convert_to_filter
+  };
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(AddButton)
