@@ -1,10 +1,12 @@
 import React, {  Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import getCurrency from './../../../data/currency/action';
 import getLastXDays from './../../../data/currency/api';
-
+import { bindActionCreators } from 'redux';
+// actions
+import getCurrency from './../../../data/currency/action';
+import filterUpdate from './../../../state/filters/action';
+import convertToFilterUpdate from './../../../state/convert-to-filter/action';
 import {
   LineChart,
   Line,
@@ -78,34 +80,41 @@ export class Graph extends Component {
       this.props.initialState.base_currency
     )
       .then((result) => this.props.actions.currency(result))
+
+    this.props.actions.updateFilter({should_update:false});
+    this.props.actions.updateConvertToFilter({should_update:false});
   }
 
   componentWillUpdate(nextProps, nextState){
-    if(nextProps.filter === this.props.filter || nextProps.convert_to_filter === this.props.convert_to_filter) {
-      let days = this.props.filter && this.props.filter.last_x_days ?
-        this.props.filter.last_x_days : this.props.initialState.last_x_days;
+    if(nextProps.filter || nextProps.convert_to_filter){
+      if(nextProps.filter.should_update || nextProps.convert_to_filter.should_update) {
+        let days = nextProps.filter.last_x_days ?
+          nextProps.filter.last_x_days : this.props.initialState.last_x_days;
 
-      let base_currency = this.props.filter && this.props.filter.base_currency ?
-        this.props.filter.base_currency : this.props.initialState.base_currency;
+        let base_currency = nextProps.filter.base_currency ?
+          nextProps.filter.base_currency : this.props.initialState.base_currency;
 
-      if(!this.props.convert_to_filter) {
-        getLastXDays(days, this.props.initialState.convert_to , base_currency)
-          .then((result) => this.props.actions.currency(result))
-       } else {
-         getLastXDays(days, this.props.convert_to_filter, base_currency)
-           .then((result) => this.props.actions.currency(result))
-       }
-      // TODO add more than one currency
-      // else {
-      //   for(let i = 0 ; i < Object.keys(this.props.convert_to_filter).length ; i++ ){
-      //     getLastXDays(days, this.props.convert_to_filter[i].convert_to , base_currency)
-      //       .then((result) => {
-      //         let hash = {};
-      //         hash[i] = result;
-      //         this.props.actions.currency(hash)
-      //       })
-      //   }
-      // }
+        let convert_to = (nextProps.convert_to_filter && !nextProps.convert_to_filter.convert_to) ?
+          this.props.initialState.convert_to : nextProps.convert_to_filter.convert_to;
+
+        getLastXDays(parseInt(days), convert_to, base_currency)
+          .then((result) => this.props.actions.currency(result));
+
+         this.props.actions.updateFilter({should_update:false});
+         this.props.actions.updateConvertToFilter({should_update:false});
+
+        // TODO add more than one currency
+        // else {
+        //   for(let i = 0 ; i < Object.keys(this.props.convert_to_filter).length ; i++ ){
+        //     getLastXDays(days, this.props.convert_to_filter[i].convert_to , base_currency)
+        //       .then((result) => {
+        //         let hash = {};
+        //         hash[i] = result;
+        //         this.props.actions.currency(hash)
+        //       })
+        //   }
+        // }
+      }
     }
   }
 }
@@ -133,6 +142,8 @@ function mapDispatchToProps(dispatch){
     actions: bindActionCreators(
       {
         currency: getCurrency,
+        updateFilter:filterUpdate ,
+        updateConvertToFilter:convertToFilterUpdate
       },
       dispatch
     )

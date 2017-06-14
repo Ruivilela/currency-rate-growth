@@ -25,7 +25,7 @@ class FilterCurrency extends Filter {
   }
 
   handleChange(event){
-    this.props.actions.filterUpdate({base_currency:event.target.value});
+    this.props.actions.filterUpdate({base_currency:event.target.value, should_update:true});
   }
 }
 

@@ -24,7 +24,7 @@ export class FilterDays extends Filter {
   }
 
   handleChange(event) {
-    this.props.actions.filterUpdate({ last_x_days: event.target.value });
+    this.props.actions.filterUpdate({last_x_days: event.target.value, should_update:true});
   }
 }
 

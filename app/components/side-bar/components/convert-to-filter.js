@@ -30,7 +30,7 @@ export class ConvertToFilter extends Filter {
     // filter[target_value] = {
     //   convert_to: event.target.value
     // }
-    this.props.actions.convertToFilterUpdate(event.target.value);
+    this.props.actions.convertToFilterUpdate({convert_to:event.target.value, should_update:true});
   }
 }
 
